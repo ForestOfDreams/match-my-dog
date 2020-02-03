@@ -20,6 +20,8 @@ namespace match_my_dog
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    var config = new ConfigurationBuilder().AddCommandLine(args).Build();
+                    webBuilder.UseConfiguration(config);
                     webBuilder.UseStartup<Startup>();
                 });
     }
