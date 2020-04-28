@@ -18,11 +18,6 @@ namespace match_my_dog
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    var config = new ConfigurationBuilder().AddCommandLine(args).Build();
-                    webBuilder.UseConfiguration(config);
-                    webBuilder.UseStartup<Startup>();
-                });
+                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>());
     }
 }

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "match-my-dog", "match-my-dog\match-my-dog.csproj", "{490FF247-A74C-4BC8-9E82-B2E8B5EF03A0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "match-my-dog", "match-my-dog\match-my-dog.csproj", "{86920C7B-E594-4668-8777-7D09802191C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{490FF247-A74C-4BC8-9E82-B2E8B5EF03A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{490FF247-A74C-4BC8-9E82-B2E8B5EF03A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{490FF247-A74C-4BC8-9E82-B2E8B5EF03A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{490FF247-A74C-4BC8-9E82-B2E8B5EF03A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86920C7B-E594-4668-8777-7D09802191C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86920C7B-E594-4668-8777-7D09802191C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86920C7B-E594-4668-8777-7D09802191C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86920C7B-E594-4668-8777-7D09802191C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
