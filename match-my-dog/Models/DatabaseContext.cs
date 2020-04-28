@@ -11,15 +11,14 @@ namespace match_my_dog.Models
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(Environment.GetEnvironmentVariable(Constants.EnvironmentConnectionString));
+            optionsBuilder.UseNpgsql(Config.ConnectionString);
         }
 
         public DbSet<User> Users { get; set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
+            Database.EnsureCreated();
         }
-
-        public List<User> getUsers() => Users.ToList();
     }
 }

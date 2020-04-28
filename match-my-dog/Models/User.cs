@@ -12,11 +12,17 @@ namespace match_my_dog.Models
     {
         [Key, Column("id")]
         public long Id { get; set; }
-        [Column("username")]
-        public string UserName { get; set; }
-        [Column("name")]
+
+        [Column("username"), Required]
+        public string Username { get; set; }
+
+        [Column("name"), Required]
         public string Name { get; set; }
-        [Column("password")]
+
+        [Column("password"), Required]
         public string Password { get; set; }
+
+        [Column("role"), Required]
+        public string Role { get; set; }
     }
 }
