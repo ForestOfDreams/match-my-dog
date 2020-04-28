@@ -16,5 +16,7 @@ namespace match_my_dog.Models
         public string UserName { get; set; }
         [Column("name")]
         public string Name { get; set; }
+        [Column("password")]
+        public string Password { get; set; }
     }
 }
