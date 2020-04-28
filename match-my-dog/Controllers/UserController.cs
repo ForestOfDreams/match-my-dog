@@ -27,7 +27,7 @@ namespace match_my_dog.Controllers
         {
             var user = context.Users.FirstOrDefault(user => user.Username == User.Identity.Name);
 
-            if (user == null) BadRequest();
+            if (user == null) Unauthorized();
 
             return user;
         }

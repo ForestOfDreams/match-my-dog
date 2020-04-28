@@ -29,6 +29,7 @@ namespace match_my_dog.Controllers
         public async Task<ActionResult<TokenData>> PostAuth(AuthData authData)
         {
             var hashedPassword = GetHashedPassword(authData.Password);
+            Console.WriteLine($"{authData.Password} {hashedPassword}");
             var identity = GetIdentity(authData.Username, hashedPassword);
             if (identity == null) return BadRequest();
             return new TokenData() { AccessToken = GetToken(identity) };
@@ -44,7 +45,7 @@ namespace match_my_dog.Controllers
 
         private ClaimsIdentity GetIdentity(string username, string password)
         {
-            var user = context.Users.First(user => user.Username == username && user.Password == password);
+            var user = context.Users.FirstOrDefault(user => user.Username == username && user.Password == password);
 
             if (user == null) return null;
 
