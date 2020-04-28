@@ -61,6 +61,6 @@ namespace match_my_dog.Controllers
         }
 
         private static MD5 hash = MD5.Create();
-        private static string GetHashedPassword(string password) => Convert.ToString(hash.ComputeHash(Encoding.UTF8.GetBytes(password)));
+        private static string GetHashedPassword(string password) => string.Concat(hash.ComputeHash(Encoding.UTF8.GetBytes(password)).Select(x => x.ToString("x2")));
     }
 }
