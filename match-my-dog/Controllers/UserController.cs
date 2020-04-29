@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using match_my_dog.Models;
 using Microsoft.AspNetCore.Authorization;
+using match_my_dog.Data;
 
 namespace match_my_dog.Controllers
 {
@@ -23,14 +24,43 @@ namespace match_my_dog.Controllers
 
         [Authorize]
         [HttpGet("me")]
-        public async Task<ActionResult<User>> GetMe()
+        public async Task<ActionResult<UserData>> GetMe()
         {
-            Console.WriteLine(User.Identity.Name);
-            var user = context.Users.FirstOrDefault(user => user.Username == User.Identity.Name);
+            var user = GetUser();
 
-            if (user == null) BadRequest();
+            if (user == null) return Unauthorized();
 
-            return user;
+            return UserData.FromUser(user);
+        }
+
+        private User GetUser() => context.Users.FirstOrDefault(user => user.Username == User.Identity.Name);
+
+        [Authorize]
+        [HttpPost("me")]
+        public async Task<ActionResult> PostMe(UserEditData userEditData)
+        {
+            var user = GetUser();
+
+            if (user == null) return Unauthorized();
+
+            context.Entry(user).CurrentValues.SetValues(userEditData);
+            context.SaveChanges();
+
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpDelete("me")]
+        public async Task<ActionResult> DeleteMe()
+        {
+            var user = GetUser();
+
+            if (user == null) return Unauthorized();
+
+            context.Remove(user);
+            context.SaveChanges();
+
+            return Ok();
         }
     }
 }

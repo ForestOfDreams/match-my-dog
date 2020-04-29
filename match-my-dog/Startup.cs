@@ -46,7 +46,7 @@ namespace match_my_dog
                             ValidateIssuerSigningKey = true,
                             IssuerSigningKey = Config.SymmetricAuthKey,
 
-                            ValidateLifetime = true
+                            ValidateLifetime = false
                         };
                     });
 
