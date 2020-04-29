@@ -38,6 +38,7 @@ namespace match_my_dog.Controllers
             issuer: Config.AuthIssuer,
             audience: Config.AuthAudience,
             notBefore: DateTime.UtcNow,
+            expires: DateTime.UtcNow.AddMonths(1),
             claims: identity.Claims,
             signingCredentials: new SigningCredentials(Config.SymmetricAuthKey, SecurityAlgorithms.HmacSha256)
         ));

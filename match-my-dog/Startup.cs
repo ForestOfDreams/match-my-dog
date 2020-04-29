@@ -44,7 +44,9 @@ namespace match_my_dog
                             ValidAudience = Config.AuthAudience,
 
                             ValidateIssuerSigningKey = true,
-                            IssuerSigningKey = Config.SymmetricAuthKey
+                            IssuerSigningKey = Config.SymmetricAuthKey,
+
+                            ValidateLifetime = true
                         };
                     });
 
