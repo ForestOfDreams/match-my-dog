@@ -43,7 +43,7 @@ namespace match_my_dog.Controllers
 
             if (user == null) return Unauthorized();
 
-            context.Entry(user).CurrentValues.SetValues(userEditData);
+            user.Name = userEditData.Name;
             context.SaveChanges();
 
             return Ok();
