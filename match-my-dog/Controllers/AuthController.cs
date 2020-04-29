@@ -29,7 +29,6 @@ namespace match_my_dog.Controllers
         public async Task<ActionResult<TokenData>> PostAuth(AuthData authData)
         {
             var hashedPassword = GetHashedPassword(authData.Password);
-            Console.WriteLine($"{authData.Password} {hashedPassword}");
             var identity = GetIdentity(authData.Username, hashedPassword);
             if (identity == null) return BadRequest();
             return new TokenData() { AccessToken = GetToken(identity) };

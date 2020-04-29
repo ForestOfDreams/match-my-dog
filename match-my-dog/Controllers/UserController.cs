@@ -25,9 +25,10 @@ namespace match_my_dog.Controllers
         [HttpGet("me")]
         public async Task<ActionResult<User>> GetMe()
         {
+            Console.WriteLine(User.Identity.Name);
             var user = context.Users.FirstOrDefault(user => user.Username == User.Identity.Name);
 
-            if (user == null) Unauthorized();
+            if (user == null) BadRequest();
 
             return user;
         }
