@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace match_my_dog.Models
+namespace match_my_dog.Data.Request.User
 {
-    public class TokenData
+    public class Post
     {
-        public string AccessToken { get; set; }
+        public string Name { get; set; }
     }
 }

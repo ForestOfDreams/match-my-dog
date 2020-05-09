@@ -25,4 +25,10 @@ namespace match_my_dog.Models
         [Column("role"), Required]
         public string Role { get; set; }
     }
+
+    public static class Roles
+    {
+        public static string User => "user";
+        public static string Administrator => "administrator";
+    }
 }

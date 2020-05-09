@@ -24,27 +24,27 @@ namespace match_my_dog.Controllers
 
         [Authorize]
         [HttpGet("me")]
-        public async Task<ActionResult<UserData>> GetMe()
+        public async Task<ActionResult<Data.Response.User>> GetMe()
         {
             var user = GetUser();
 
             if (user == null) return Unauthorized();
 
-            return UserData.FromUser(user);
+            return Data.Response.User.FromUser(user);
         }
 
-        private User GetUser() => context.Users.FirstOrDefault(user => user.Username == User.Identity.Name);
+        private User GetUser() => long.TryParse(User.Identity.Name, out long id) ? context.Users.FirstOrDefault(user => user.Id == id) : null;
 
         [Authorize]
         [HttpPost("me")]
-        public async Task<ActionResult> PostMe(UserEditData userEditData)
+        public async Task<ActionResult> PostMe(Data.Request.User.Post data)
         {
             var user = GetUser();
 
             if (user == null) return Unauthorized();
 
-            user.Name = userEditData.Name;
-            context.SaveChanges();
+            user.Name = data.Name;
+            await context.SaveChangesAsync();
 
             return Ok();
         }
@@ -58,7 +58,7 @@ namespace match_my_dog.Controllers
             if (user == null) return Unauthorized();
 
             context.Remove(user);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
 
             return Ok();
         }
