@@ -16,5 +16,7 @@ namespace match_my_dog.Data.Response
         public static Error UserExists => new Error() { Code = "UserExists", Message = "User with such username already exists" };
 
         public static Error PasswordNotMatch => new Error() { Code = "PasswordNotMatch", Message = "Confirm password does not match" };
+
+        public static Error BadUsernameOrPassword => new Error() { Code = "BadUsernameOrPassword", Message = "There is no user with such username and password" };
     }
 }
