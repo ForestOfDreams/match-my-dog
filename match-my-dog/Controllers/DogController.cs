@@ -34,7 +34,7 @@ namespace match_my_dog.Controllers
         }
 
         [Authorize]
-        [HttpGet("my")]
+        [HttpGet()]
         public async Task<ActionResult<Data.Response.Dog[]>> GetMyDog()
         {
             var user = GetUser();
@@ -48,14 +48,14 @@ namespace match_my_dog.Controllers
         }
 
         [Authorize]
-        [HttpPost("my")]
-        public async Task<ActionResult> PostMyDog(Data.Request.Dog.My.Post data)
+        [HttpPost("{id}")]
+        public async Task<ActionResult> PostMyDog(long id, Data.Request.Dog.Post data)
         {
             var user = GetUser();
 
             if (user == null) return Unauthorized();
 
-            var dog = context.Dogs.FirstOrDefault(dog => dog.Id == data.Id && dog.OwnerId == user.Id);
+            var dog = context.Dogs.FirstOrDefault(dog => dog.Id == id && dog.OwnerId == user.Id);
 
             if (dog == null) return BadRequest(Error.BadDogId);
 
@@ -69,8 +69,8 @@ namespace match_my_dog.Controllers
         }
 
         [Authorize]
-        [HttpPut("my")]
-        public async Task<ActionResult> PutMyDog(Data.Request.Dog.My.Put data)
+        [HttpPut()]
+        public async Task<ActionResult> PutMyDog(Data.Request.Dog.Put data)
         {
             var user = GetUser();
 
@@ -84,14 +84,14 @@ namespace match_my_dog.Controllers
         }
 
         [Authorize]
-        [HttpDelete("my")]
-        public async Task<ActionResult> DeleteMyDog(Data.Request.Dog.My.Delete data)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteMyDog(long id)
         {
             var user = GetUser();
 
             if (user == null) return Unauthorized();
 
-            var dog = context.Dogs.FirstOrDefault(dog => dog.Id == data.Id && dog.OwnerId == user.Id);
+            var dog = context.Dogs.FirstOrDefault(dog => dog.Id == id && dog.OwnerId == user.Id);
 
             if (dog == null) return BadRequest(Error.BadDogId);
 

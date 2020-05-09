@@ -9,7 +9,7 @@ namespace match_my_dog.Models
         [Key, Column("id")]
         public long Id { get; set; }
 
-        [ForeignKey("owner_id"), Column("owner_id")]
+        [ForeignKey("owner_id"), Column("owner_id"), Required]
         public long OwnerId { get; set; }
 
         [Column("name"), Required]
