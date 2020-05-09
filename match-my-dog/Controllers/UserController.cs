@@ -37,7 +37,7 @@ namespace match_my_dog.Controllers
 
         [Authorize]
         [HttpPost("me")]
-        public async Task<ActionResult> PostMe(Data.Request.User.Post data)
+        public async Task<ActionResult> PostMe(Data.Request.User.Me.Post data)
         {
             var user = GetUser();
 

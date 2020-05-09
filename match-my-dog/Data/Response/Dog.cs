@@ -7,6 +7,7 @@ namespace match_my_dog.Data.Response
 {
     public class Dog
     {
+        public long Id { get; set; }
         public string Name { get; set; }
 
         public string Breed { get; set; }
@@ -17,6 +18,7 @@ namespace match_my_dog.Data.Response
 
         public static Dog FromDog(Models.User owner, Models.Dog dog) => new Dog()
         {
+            Id = dog.Id,
             Name = dog.Name,
             Breed = dog.Breed,
             Weight = dog.Weight,
