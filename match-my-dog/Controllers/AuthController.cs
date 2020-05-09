@@ -50,7 +50,7 @@ namespace match_my_dog.Controllers
         {
             var hashedPassword = GetHashedPassword(password);
             var identity = GetIdentity(username, hashedPassword);
-            if (identity == null) return BadRequest();
+            if (identity == null) return BadRequest(Error.BadUsernameOrPassword);
             return new Token() { AccessToken = GetToken(identity) };
         }
 
