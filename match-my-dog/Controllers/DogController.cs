@@ -62,6 +62,8 @@ namespace match_my_dog.Controllers
             dog.Name = data.Name;
             dog.Weight = data.Weight;
             dog.Breed = data.Breed;
+            dog.Sex = data.Sex;
+            dog.Birthday = data.Birthday;
 
             await context.SaveChangesAsync();
 
@@ -76,7 +78,7 @@ namespace match_my_dog.Controllers
 
             if (user == null) return Unauthorized();
 
-            context.Dogs.Add(new Models.Dog() { Name = data.Name, Breed = data.Breed, Weight = data.Weight, OwnerId = user.Id });
+            context.Dogs.Add(new Models.Dog() { Name = data.Name, Breed = data.Breed, Weight = data.Weight, Birthday = data.Birthday, OwnerId = user.Id });
 
             await context.SaveChangesAsync();
 

@@ -19,6 +19,9 @@ namespace match_my_dog.Models
         [Column("name"), Required]
         public string Name { get; set; }
 
+        [Column("phone"), Required]
+        public string Phone { get; set; }
+
         [Column("password"), Required]
         public string Password { get; set; }
 

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using match_my_dog.Models;
 using Microsoft.AspNetCore.Authorization;
 using match_my_dog.Data;
+using match_my_dog.Data.Response;
 
 namespace match_my_dog.Controllers
 {
@@ -22,6 +23,16 @@ namespace match_my_dog.Controllers
             this.context = context;
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Data.Response.User>> GetUser(long id)
+        {
+            var user = context.Users.FirstOrDefault(user => user.Id == id);
+
+            if (user == null) return BadRequest(Error.BadUserId);
+
+            return Data.Response.User.FromUser(user);
+        }
+
         [Authorize]
         [HttpGet("me")]
         public async Task<ActionResult<Data.Response.User>> GetMe()
@@ -33,7 +44,7 @@ namespace match_my_dog.Controllers
             return Data.Response.User.FromUser(user);
         }
 
-        private User GetUser() => long.TryParse(User.Identity.Name, out long id) ? context.Users.FirstOrDefault(user => user.Id == id) : null;
+        private Models.User GetUser() => long.TryParse(User.Identity.Name, out long id) ? context.Users.FirstOrDefault(user => user.Id == id) : null;
 
         [Authorize]
         [HttpPost("me")]
@@ -44,6 +55,8 @@ namespace match_my_dog.Controllers
             if (user == null) return Unauthorized();
 
             user.Name = data.Name;
+            user.Phone = data.Phone;
+
             await context.SaveChangesAsync();
 
             return Ok();

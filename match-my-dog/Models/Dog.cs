@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace match_my_dog.Models
@@ -18,7 +19,13 @@ namespace match_my_dog.Models
         [Column("breed"), Required]
         public string Breed { get; set; }
 
-        [Column("weight"), Required]
-        public double Weight { get; set; }
+        [Column("weight")]
+        public double? Weight { get; set; }
+
+        [Column("sex"), Required]
+        public bool Sex { get; set; }
+
+        [Column("birthday")]
+        public DateTime Birthday { get; set; }
     }
 }

@@ -40,7 +40,14 @@ namespace match_my_dog.Controllers
             if (context.Users.Any(user => user.Username == data.Username))
                 return BadRequest(Error.UserExists);
 
-            context.Users.Add(new Models.User() { Name = data.Name, Password = GetHashedPassword(data.Password), Username = data.Username, Role = Roles.User });
+            context.Users.Add(new Models.User() { 
+                Phone = data.Phone, 
+                Name = data.Name, 
+                Password = GetHashedPassword(data.Password), 
+                Username = data.Username, 
+                Role = Roles.User 
+            });
+            
             await context.SaveChangesAsync();
 
             return GetTokenResponse(data.Username, data.Password);

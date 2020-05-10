@@ -11,8 +11,11 @@ namespace match_my_dog.Data.Response
         public string Name { get; set; }
 
         public string Breed { get; set; }
-        
-        public double Weight { get; set; }
+
+        public double? Weight { get; set; }
+
+        public bool Sex { get; set; }
+        public DateTime Birthday { get; set; }
 
         public string OwnerUsername { get; set; }
 
@@ -22,6 +25,7 @@ namespace match_my_dog.Data.Response
             Name = dog.Name,
             Breed = dog.Breed,
             Weight = dog.Weight,
+            Sex = dog.Sex,
             OwnerUsername = owner.Username
         };
     }
