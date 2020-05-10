@@ -26,6 +26,6 @@ namespace match_my_dog.Models
         public bool Sex { get; set; }
 
         [Column("birthday")]
-        public DateTime Birthday { get; set; }
+        public string? Birthday { get; set; }
     }
 }
