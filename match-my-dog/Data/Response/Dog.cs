@@ -22,6 +22,7 @@ namespace match_my_dog.Data.Response
         public static Dog FromDog(Models.User owner, Models.Dog dog) => new Dog()
         {
             Id = dog.Id,
+            Birthday = dog.Birthday,
             Name = dog.Name,
             Breed = dog.Breed,
             Weight = dog.Weight,
