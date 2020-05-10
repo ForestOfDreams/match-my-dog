@@ -15,7 +15,7 @@ namespace match_my_dog.Data.Response
         public double? Weight { get; set; }
 
         public bool Sex { get; set; }
-        public DateTime Birthday { get; set; }
+        public string? Birthday { get; set; }
 
         public string OwnerUsername { get; set; }
 
