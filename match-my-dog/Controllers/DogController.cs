@@ -116,7 +116,7 @@ namespace match_my_dog.Controllers
                 .Where(
                     dog => dog.OwnerId != user.Id && 
                     dog.Sex == data.Sex &&
-                    (dog.Breed.ToLower().Contains(data.Breed.ToLower()) || data.Breed.ToLower().Contains(dog.Breed.ToLower())) &&
+                    (dog.Breed.ToLower().Trim().Contains(data.Breed.ToLower().Trim()) || data.Breed.ToLower().Trim().Contains(dog.Breed.ToLower().Trim())) &&
                     (data.WeightMin == null || dog.Weight > data.WeightMin) &&
                     (data.WeightMax == null || dog.Weight < data.WeightMax)
                 )

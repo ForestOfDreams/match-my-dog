@@ -24,9 +24,9 @@ namespace match_my_dog.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Data.Response.User>> GetUser(long id)
+        public async Task<ActionResult<Data.Response.User>> GetUser(string username)
         {
-            var user = context.Users.FirstOrDefault(user => user.Id == id);
+            var user = context.Users.FirstOrDefault(user => user.Username == username);
 
             if (user == null) return BadRequest(Error.BadUserId);
 
