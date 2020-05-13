@@ -27,5 +27,9 @@ namespace match_my_dog.Models
 
         [Column("birthday")]
         public DateTime Birthday { get; set; }
+
+        [Column("avatar")]
+        public string Avatar { get; set; }
+
     }
 }

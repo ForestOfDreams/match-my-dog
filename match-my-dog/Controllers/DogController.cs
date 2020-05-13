@@ -1,8 +1,12 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Imgur.API;
+using Imgur.API.Authentication.Impl;
+using Imgur.API.Endpoints.Impl;
 using match_my_dog.Data.Response;
 using match_my_dog.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace match_my_dog.Controllers
@@ -12,6 +16,7 @@ namespace match_my_dog.Controllers
     public class DogController : ControllerBase
     {
         private readonly DatabaseContext context;
+        private readonly ImgurClient imgur = new ImgurClient(Config.ImgurClientId, Config.ImgurClientSecret);
 
         public DogController(DatabaseContext context)
         {
@@ -24,7 +29,7 @@ namespace match_my_dog.Controllers
         {
             var dog = context.Dogs.FirstOrDefault(dog => dog.Id == id);
 
-            if (dog == null) return BadRequest(Error.BadDogId);
+            if (dog == null) return BadRequest(Error.BadDogId());
 
             var user = context.Users.FirstOrDefault(user => user.Id == dog.OwnerId);
 
@@ -57,7 +62,7 @@ namespace match_my_dog.Controllers
 
             var dog = context.Dogs.FirstOrDefault(dog => dog.Id == id && dog.OwnerId == user.Id);
 
-            if (dog == null) return BadRequest(Error.BadDogId);
+            if (dog == null) return BadRequest(Error.BadDogId());
 
             dog.Name = data.Name;
             dog.Weight = data.Weight;
@@ -86,6 +91,39 @@ namespace match_my_dog.Controllers
         }
 
         [Authorize]
+        [HttpPut("{id}")]
+        public async Task<ActionResult> PutMyDog(long id, IFormFile file)
+        {
+            var user = GetUser();
+
+            if (user == null) return Unauthorized();
+
+            var dog = context.Dogs.FirstOrDefault(dog => dog.Id == id && dog.OwnerId == user.Id);
+
+            if (dog == null) return BadRequest(Error.BadDogId());
+
+            if (file.ContentType.Split('/').FirstOrDefault() != "image") return BadRequest(Error.FileUploadError("Bad content type"));
+
+            try
+            {
+                var endpoint = new ImageEndpoint(imgur);
+                var image = await endpoint.UploadImageStreamAsync(file.OpenReadStream());
+
+                dog.Avatar = image.Link;
+
+                await context.SaveChangesAsync();
+            }
+            catch (ImgurException ex)
+            {
+                return BadRequest(Error.FileUploadError(ex.Message));
+            }
+
+            return Ok();
+        }
+
+
+
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteMyDog(long id)
         {
@@ -95,7 +133,7 @@ namespace match_my_dog.Controllers
 
             var dog = context.Dogs.FirstOrDefault(dog => dog.Id == id && dog.OwnerId == user.Id);
 
-            if (dog == null) return BadRequest(Error.BadDogId);
+            if (dog == null) return BadRequest(Error.BadDogId());
 
             context.Dogs.Remove(dog);
 

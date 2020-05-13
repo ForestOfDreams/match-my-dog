@@ -32,13 +32,13 @@ namespace match_my_dog.Controllers
         public async Task<ActionResult<Token>> PutAuth(Put data)
         {
             if (data.Password != data.ConfirmPassword)
-                return BadRequest(Error.PasswordNotMatch);
+                return BadRequest(Error.PasswordNotMatch());
 
             if (!UsernameRegex.IsMatch(data.Username))
-                return BadRequest(Error.BadUsername);
+                return BadRequest(Error.BadUsername());
 
             if (context.Users.Any(user => user.Username == data.Username))
-                return BadRequest(Error.UserExists);
+                return BadRequest(Error.UserExists());
 
             context.Users.Add(new Models.User() { 
                 Phone = data.Phone, 
@@ -57,7 +57,7 @@ namespace match_my_dog.Controllers
         {
             var hashedPassword = GetHashedPassword(password);
             var identity = GetIdentity(username, hashedPassword);
-            if (identity == null) return BadRequest(Error.BadUsernameOrPassword);
+            if (identity == null) return BadRequest(Error.BadUsernameOrPassword());
             return new Token() { AccessToken = GetToken(identity) };
         }
 

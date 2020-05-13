@@ -14,5 +14,8 @@ namespace match_my_dog
         public static string AuthKey = Environment.GetEnvironmentVariable(Constants.EnvironmentAuthKey);
         public static string ConnectionString = Environment.GetEnvironmentVariable(Constants.EnvironmentConnectionString);
         public static SymmetricSecurityKey SymmetricAuthKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(AuthKey));
+
+        public static string ImgurClientId = Environment.GetEnvironmentVariable(Constants.EnvironmentImgurClientId);
+        public static string ImgurClientSecret = Environment.GetEnvironmentVariable(Constants.EnvironmentImgurClientSecret);
     }
 }
