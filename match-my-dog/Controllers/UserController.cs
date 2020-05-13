@@ -23,7 +23,7 @@ namespace match_my_dog.Controllers
             this.context = context;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{username}")]
         public async Task<ActionResult<Data.Response.User>> GetUser(string username)
         {
             var user = context.Users.FirstOrDefault(user => user.Username == username);
