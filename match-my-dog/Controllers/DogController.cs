@@ -34,7 +34,7 @@ namespace match_my_dog.Controllers
         }
 
         [Authorize]
-        [HttpGet()]
+        [HttpGet]
         public async Task<ActionResult<Data.Response.Dog[]>> GetMyDog()
         {
             var user = GetUser();
@@ -71,7 +71,7 @@ namespace match_my_dog.Controllers
         }
 
         [Authorize]
-        [HttpPut()]
+        [HttpPut]
         public async Task<ActionResult> PutMyDog(Data.Request.Dog.Put data)
         {
             var user = GetUser();
@@ -102,6 +102,26 @@ namespace match_my_dog.Controllers
             await context.SaveChangesAsync();
 
             return Ok();
+        }
+
+        [Authorize]
+        [HttpPost("find")]
+        public async Task<ActionResult<Data.Response.Dog[]>> FindDog(Data.Request.Dog.Find.Post data)
+        {
+            var user = GetUser();
+
+            if (user == null) return Unauthorized();
+
+            return context.Dogs
+                .Where(
+                    dog => dog.OwnerId != user.Id && 
+                    dog.Sex == data.Sex &&
+                    (dog.Breed.ToLower().Contains(data.Breed.ToLower()) || data.Breed.ToLower().Contains(dog.Breed.ToLower())) &&
+                    (data.WeightMin == null || dog.Weight > data.WeightMin) &&
+                    (data.WeightMax == null || dog.Weight < data.WeightMax)
+                )
+                .Select(dog => Data.Response.Dog.FromDog(user, dog))
+                .ToArray();
         }
     }
 }
