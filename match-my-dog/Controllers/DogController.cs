@@ -102,20 +102,28 @@ namespace match_my_dog.Controllers
 
             if (dog == null) return BadRequest(Error.BadDogId());
 
-            if (file.ContentType.Split('/').FirstOrDefault() != "image") return BadRequest(Error.FileUploadError("Bad content type"));
-
-            try
+            if (file == null)
             {
-                var endpoint = new ImageEndpoint(imgur);
-                var image = await endpoint.UploadImageStreamAsync(file.OpenReadStream());
-
-                dog.Avatar = image.Link;
-
+                dog.Avatar = null;
                 await context.SaveChangesAsync();
             }
-            catch (ImgurException ex)
+            else
             {
-                return BadRequest(Error.FileUploadError(ex.Message));
+                if (file.ContentType.Split('/').FirstOrDefault() != "image") return BadRequest(Error.FileUploadError("Bad content type"));
+
+                try
+                {
+                    var endpoint = new ImageEndpoint(imgur);
+                    var image = await endpoint.UploadImageStreamAsync(file.OpenReadStream());
+
+                    dog.Avatar = image.Link;
+
+                    await context.SaveChangesAsync();
+                }
+                catch (ImgurException ex)
+                {
+                    return BadRequest(Error.FileUploadError(ex.Message));
+                }
             }
 
             return Ok();
