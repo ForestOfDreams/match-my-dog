@@ -120,7 +120,7 @@ namespace match_my_dog.Controllers
                     (data.WeightMin == null || dog.Weight > data.WeightMin) &&
                     (data.WeightMax == null || dog.Weight < data.WeightMax)
                 )
-                .Select(dog => Data.Response.Dog.FromDog(user, dog))
+                .Select(dog => Data.Response.Dog.FromDog(context.Users.FirstOrDefault(user => user.Id == dog.OwnerId), dog))
                 .ToArray();
         }
     }

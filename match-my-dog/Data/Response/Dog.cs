@@ -19,6 +19,8 @@ namespace match_my_dog.Data.Response
 
         public string OwnerUsername { get; set; }
 
+        public string OwnerPhone { get; set; }
+
         public static Dog FromDog(Models.User owner, Models.Dog dog) => new Dog()
         {
             Id = dog.Id,
@@ -27,7 +29,8 @@ namespace match_my_dog.Data.Response
             Breed = dog.Breed,
             Weight = dog.Weight,
             Sex = dog.Sex,
-            OwnerUsername = owner.Username
+            OwnerUsername = owner?.Username,
+            OwnerPhone = owner?.Phone
         };
     }
 }
