@@ -92,7 +92,7 @@ namespace match_my_dog.Controllers
 
         [Authorize]
         [HttpPut("{id}")]
-        public async Task<ActionResult> PutMyDog(long id, IFormFile file)
+        public async Task<ActionResult> PutMyDog(long id, IFormFile image)
         {
             var user = GetUser();
 
@@ -102,21 +102,21 @@ namespace match_my_dog.Controllers
 
             if (dog == null) return BadRequest(Error.BadDogId());
 
-            if (file == null)
+            if (image == null)
             {
                 dog.Avatar = null;
                 await context.SaveChangesAsync();
             }
             else
             {
-                if (file.ContentType.Split('/').FirstOrDefault() != "image") return BadRequest(Error.FileUploadError("Bad content type"));
+                if (image.ContentType.Split('/').FirstOrDefault() != "image") return BadRequest(Error.FileUploadError("Bad content type"));
 
                 try
                 {
                     var endpoint = new ImageEndpoint(imgur);
-                    var image = await endpoint.UploadImageStreamAsync(file.OpenReadStream());
+                    var result = await endpoint.UploadImageStreamAsync(image.OpenReadStream());
 
-                    dog.Avatar = image.Link;
+                    dog.Avatar = result.Link;
 
                     await context.SaveChangesAsync();
                 }
