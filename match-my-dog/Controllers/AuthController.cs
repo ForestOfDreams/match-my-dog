@@ -37,6 +37,9 @@ namespace match_my_dog.Controllers
             if (!UsernameRegex.IsMatch(data.Username))
                 return BadRequest(Error.BadUsername());
 
+            if (!UserController.CheckPhone(data.Phone))
+                return BadRequest(Error.BadPhone());
+
             if (context.Users.Any(user => user.Username == data.Username))
                 return BadRequest(Error.UserExists());
 

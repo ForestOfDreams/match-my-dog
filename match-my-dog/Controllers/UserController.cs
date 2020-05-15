@@ -9,6 +9,7 @@ using match_my_dog.Models;
 using Microsoft.AspNetCore.Authorization;
 using match_my_dog.Data;
 using match_my_dog.Data.Response;
+using System.Text.RegularExpressions;
 
 namespace match_my_dog.Controllers
 {
@@ -54,6 +55,8 @@ namespace match_my_dog.Controllers
 
             if (user == null) return Unauthorized();
 
+            if (!CheckPhone(data.Phone)) return BadRequest(Error.BadPhone());
+
             user.Name = data.Name;
             user.Phone = data.Phone;
 
@@ -61,6 +64,10 @@ namespace match_my_dog.Controllers
 
             return Ok();
         }
+
+        public static Regex phoneRegex = new Regex(@"^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$");
+
+        public static bool CheckPhone(string phone) => phoneRegex.IsMatch(phone);
 
         [Authorize]
         [HttpDelete("me")]

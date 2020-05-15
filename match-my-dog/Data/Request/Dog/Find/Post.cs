@@ -11,5 +11,7 @@ namespace match_my_dog.Data.Request.Dog.Find
         public string Breed { get; set; }
         public double? WeightMin { get; set; }
         public double? WeightMax { get; set; }
+        public int? AgeMin { get; set; }
+        public int? AgeMax { get; set; }
     }
 }

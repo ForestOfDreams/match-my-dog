@@ -22,6 +22,8 @@ namespace match_my_dog.Data.Response
         public static Error BadDogId() => new Error() { Code = "BadDogId", Message = "There is no dog with such id" };
         public static Error BadUserId() => new Error() { Code = "BadUserId", Message = "There is no user with such id" };
 
+        public static Error BadPhone() => new Error() { Code = "BadPhone",  Message = "Bad phone number" };
+
         public static Error FileUploadError(string message) => new Error() { Code = "FileUploadError", Message = message };
         }
 }

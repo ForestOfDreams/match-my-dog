@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Imgur.API;
 using Imgur.API.Authentication.Impl;
@@ -158,13 +159,19 @@ namespace match_my_dog.Controllers
 
             if (user == null) return Unauthorized();
 
+            var breed = data.Breed.ToLower().Trim();
+            var birthdayMax = DateTime.Now.AddYears(-data.AgeMin ?? 0);
+            var birthdayMin = DateTime.Now.AddYears(-data.AgeMax ?? 0);
+
             return context.Dogs
                 .Where(
                     dog => dog.OwnerId != user.Id && 
                     dog.Sex == data.Sex &&
-                    (dog.Breed.ToLower().Trim().Contains(data.Breed.ToLower().Trim()) || data.Breed.ToLower().Trim().Contains(dog.Breed.ToLower().Trim())) &&
+                    (dog.Breed.ToLower().Trim().Contains(breed) || breed.Contains(dog.Breed.ToLower().Trim())) &&
                     (data.WeightMin == null || dog.Weight > data.WeightMin) &&
-                    (data.WeightMax == null || dog.Weight < data.WeightMax)
+                    (data.WeightMax == null || dog.Weight < data.WeightMax) &&
+                    (data.AgeMin == null ||  dog.Birthday < birthdayMax) &&
+                    (data.AgeMax == null || dog.Birthday > birthdayMin)
                 )
                 .Select(dog => Data.Response.Dog.FromDog(context.Users.FirstOrDefault(user => user.Id == dog.OwnerId), dog))
                 .ToArray();
