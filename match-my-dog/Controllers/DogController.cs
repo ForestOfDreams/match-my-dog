@@ -66,7 +66,7 @@ namespace match_my_dog.Controllers
 
             if (dog == null) return BadRequest(Error.BadDogId());
 
-            if (CheckWeight(data))
+            if (CheckWeight(data.Weight ?? 0))
                 return BadRequest(Error.BadWeight());
 
             dog.Name = data.Name;
@@ -80,10 +80,7 @@ namespace match_my_dog.Controllers
             return Ok();
         }
 
-        private static bool CheckWeight(Post data)
-        {
-            return data.Weight <= 0 || data.Weight >= 150;
-        }
+        private static bool CheckWeight(double weight) => weight <= 0 || weight >= 150;
 
         [Authorize]
         [HttpPut]
@@ -92,6 +89,11 @@ namespace match_my_dog.Controllers
             var user = GetUser();
 
             if (user == null) return Unauthorized();
+
+            if (CheckWeight(data.Weight ?? 0))
+            {
+                return BadRequest(Error.BadWeight());
+            }
 
             context.Dogs.Add(new Models.Dog() { Name = data.Name, Breed = data.Breed, Weight = data.Weight, Birthday = data.Birthday, OwnerId = user.Id });
 

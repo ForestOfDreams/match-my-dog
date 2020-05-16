@@ -24,6 +24,9 @@ namespace match_my_dog.Data.Response
 
         public static Error BadPhone() => new Error() { Code = "BadPhone",  Message = "Bad phone number" };
 
+        public static Error BadWeight() => new Error() { Code = "BadWeight", Message = "Bad weight" };
+
         public static Error FileUploadError(string message) => new Error() { Code = "FileUploadError", Message = message };
         }
+        
 }
