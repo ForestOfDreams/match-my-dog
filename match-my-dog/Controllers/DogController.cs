@@ -95,7 +95,7 @@ namespace match_my_dog.Controllers
 
             if (!CheckBirthday(data.Birthday)) return BadRequest(Error.BadBirthday());
 
-            context.Dogs.Add(new Models.Dog() { Name = data.Name, Breed = data.Breed, Weight = data.Weight, Birthday = data.Birthday, OwnerId = user.Id });
+            context.Dogs.Add(new Models.Dog() { Name = data.Name, Breed = data.Breed, Sex = data.Sex, Weight = data.Weight, Birthday = data.Birthday, OwnerId = user.Id }); ;
 
             await context.SaveChangesAsync();
 
