@@ -66,8 +66,9 @@ namespace match_my_dog.Controllers
 
             if (dog == null) return BadRequest(Error.BadDogId());
 
-            if (CheckWeight(data.Weight ?? 0))
-                return BadRequest(Error.BadWeight());
+            if (!CheckWeight(data.Weight ?? 0)) return BadRequest(Error.BadWeight());
+
+            if (!CheckBirthday(data.Birthday)) return BadRequest(Error.BadBirthday());
 
             dog.Name = data.Name;
             dog.Weight = data.Weight;
@@ -80,26 +81,30 @@ namespace match_my_dog.Controllers
             return Ok();
         }
 
-        private static bool CheckWeight(double weight) => weight <= 0 || weight >= 150;
+        private static bool CheckWeight(double weight) => weight > 0 || weight < 150;
 
         [Authorize]
         [HttpPut]
-        public async Task<ActionResult> PutMyDog(Data.Request.Dog.Put data)
+        public async Task<ActionResult> PutMyDog(Put data)
         {
             var user = GetUser();
 
             if (user == null) return Unauthorized();
 
-            if (CheckWeight(data.Weight ?? 0))
-            {
-                return BadRequest(Error.BadWeight());
-            }
+            if (!CheckWeight(data.Weight ?? 0)) return BadRequest(Error.BadWeight());
+
+            if (!CheckBirthday(data.Birthday)) return BadRequest(Error.BadBirthday());
 
             context.Dogs.Add(new Models.Dog() { Name = data.Name, Breed = data.Breed, Weight = data.Weight, Birthday = data.Birthday, OwnerId = user.Id });
 
             await context.SaveChangesAsync();
 
             return Ok();
+        }
+
+        private static bool CheckBirthday(DateTime birthday)
+        {
+            return birthday < DateTime.Now.AddYears(-100) || birthday > DateTime.Now;
         }
 
         [Authorize]
