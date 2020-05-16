@@ -104,7 +104,7 @@ namespace match_my_dog.Controllers
 
         private static bool CheckBirthday(DateTime birthday)
         {
-            return birthday < DateTime.Now.AddYears(-100) || birthday > DateTime.Now;
+            return birthday > DateTime.Now.AddYears(-100) || birthday > DateTime.Now;
         }
 
         [Authorize]
