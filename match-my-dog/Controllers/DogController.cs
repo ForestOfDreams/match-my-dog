@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Imgur.API;
 using Imgur.API.Authentication.Impl;
 using Imgur.API.Endpoints.Impl;
+using match_my_dog.Data.Request.Dog;
 using match_my_dog.Data.Response;
 using match_my_dog.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -65,6 +66,9 @@ namespace match_my_dog.Controllers
 
             if (dog == null) return BadRequest(Error.BadDogId());
 
+            if (CheckWeight(data))
+                return BadRequest(Error.BadWeight());
+
             dog.Name = data.Name;
             dog.Weight = data.Weight;
             dog.Breed = data.Breed;
@@ -74,6 +78,11 @@ namespace match_my_dog.Controllers
             await context.SaveChangesAsync();
 
             return Ok();
+        }
+
+        private static bool CheckWeight(Post data)
+        {
+            return data.Weight <= 0 || data.Weight >= 150;
         }
 
         [Authorize]
