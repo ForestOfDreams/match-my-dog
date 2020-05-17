@@ -81,7 +81,7 @@ namespace match_my_dog.Controllers
             return Ok();
         }
 
-        private static bool CheckWeight(double weight) => weight > 0 || weight < 150;
+        private static bool CheckWeight(double weight) => weight > 0 && weight < 150;
 
         [Authorize]
         [HttpPut]
@@ -102,10 +102,7 @@ namespace match_my_dog.Controllers
             return Ok();
         }
 
-        private static bool CheckBirthday(DateTime birthday)
-        {
-            return birthday > DateTime.Now.AddYears(-100) || birthday > DateTime.Now;
-        }
+        private static bool CheckBirthday(DateTime birthday) => birthday > DateTime.Now.AddYears(-100) && birthday < DateTime.Now;
 
         [Authorize]
         [HttpPut("{id}")]
